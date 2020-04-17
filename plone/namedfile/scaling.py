@@ -139,6 +139,10 @@ class ImageScale(BrowserView):
 
     def index_html(self):
         """ download the image """
+        method = self.request.get('REQUEST_METHOD', 'GET').upper()
+        if method == "HEAD":
+            return self.HEAD(self.request, self.request.response)
+
         self.validate_access()
         set_headers(self.data, self.request.response)
         return stream_data(self.data)
